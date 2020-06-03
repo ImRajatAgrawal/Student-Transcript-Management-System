@@ -1,3 +1,4 @@
+# Required Imports
 from flask import render_template, request, redirect, url_for, flash, g, session
 from codes.transcripts import app, db, bcrypt, credittable,mail
 from codes.transcripts.forms import LoginForm, RegistrationForm, TranscriptForm
@@ -6,6 +7,7 @@ from flask_login import current_user, login_user, login_required, logout_user
 import sqlite3
 from datetime import datetime
 
+# send registration mail to student 
 def sendmail(username,password,email):
     mail.send_message('New message from college-admin',
                       sender="admin@rajat.com",
@@ -14,6 +16,7 @@ def sendmail(username,password,email):
                       "Username : "+username+"\n"+"Password : "+password+"\n"+
                       "This is a system generated mail, please do not reply to it."
                       )
+   # testing database 
 def testdb():
     for row in g.cursor.execute("select * from student"):
         print(row)
@@ -28,7 +31,7 @@ def testdb():
     for row in g.cursor.execute("select * from student_course"):
         print(row)
 
-
+# create database connection
 def createdb():
     db_con = sqlite3.connect('tables.db')
     # with app.open_resource("queries.sql",mode='r')as f:
@@ -43,7 +46,7 @@ def before_request():
     g.conDB = createdb()
     g.cursor = g.conDB.cursor()
 
-
+# Including necessary routes
 @app.route("/", methods=['GET', 'POST'])
 def login():
     # cursor=g.db.execute("select * from student")
@@ -107,6 +110,7 @@ def register():
     return render_template('register.html', title='Register', form=form)
 
 
+#form to request transcript for a particular student
 @app.route("/getTranscript", methods=['GET', 'POST'])
 @login_required
 def getTranscript():
@@ -122,6 +126,7 @@ def getTranscript():
     return render_template('transcriptform.html', title='Get Transcript', form=form)
 
 
+# view registered students
 @app.route("/view", methods=['GET', 'POST'])
 @login_required
 def viewstudents():
@@ -135,6 +140,7 @@ def viewstudents():
     return render_template("viewstudents.html", title='View Students', users=viewusers)
 
 
+#delete student record
 @app.route("/record/<action>/<int:item_id>")
 @login_required
 def deleterecord(action=None, item_id=None):
@@ -149,6 +155,7 @@ def deleterecord(action=None, item_id=None):
     return redirect(url_for('viewstudents'))
 
 
+#view Transcript Document
 @app.route("/viewtranscript/<int:id>")
 @login_required
 def viewTranscript(id=None):
