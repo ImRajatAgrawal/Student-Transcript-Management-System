@@ -1,0 +1,26 @@
+{% extends "baselayout.html" %}
+{% block content %}
+    <div class="content-section">
+      <div class="media">
+        <img class="rounded-circle account-img" src="{{ url_for('static',filename='images/default.png') }}">
+        <div class="media-body">
+          <h2 class="account-heading">{{ current_user.username }}</h2>
+          <p class="text-secondary">{{ current_user.email }}</p>
+        </div>
+      </div>
+    </div>
+    {% if current_user.username != 'admin' %}
+     <article class="media content-section">
+          <div class="media-body">
+            <div class="article-metadata">
+              <p class="mr-2" href="#">User Details </p>
+            </div>
+            <h3><a class="article-title" href="#">Location</a></h3>
+            <p class="article-content">{{ location[1] }}, {{ location[2]}}, {{location[3]}}, {{location[4]}} - {{location[5]}}.</p>
+
+          </div>
+        </article>
+
+    {% endif %}
+{% endblock content %}
+

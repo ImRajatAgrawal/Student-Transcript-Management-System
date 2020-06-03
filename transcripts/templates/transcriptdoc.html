@@ -1,0 +1,121 @@
+{% extends "baselayout.html" %}
+{% block content %}
+<div id="scriptdiv">
+    <center>
+        <span class="fontmainprops">{{college[1]}}</span><br>
+        <span class="fontprops">{{college[4]}}, </span>
+        <span class="fontprops">{{college[5]}}, </span>
+        <span class="fontprops">{{college[6]}}, </span>
+        <span class="fontprops">{{college[7]}} - </span>
+        <span class="fontprops">{{college[8]}}.</span><br><br>
+        <span class="fontmainprops">STUDENT TRANSCRIPT</span>
+    </center>
+    <hr>
+    <main class="container" role="main">
+        <div class="row">
+            <div class="col-md-6">
+                <span class="fontprops"><b>Program Name : B.E. </b><i>( {{department_details[1]}} )</i></span>
+                <br>
+                <span class="fontprops"><b>Student Name : </b>{{student_data['sname']}}</span><br>
+                <span class="fontprops"><b>Email ID : </b>{{student_data['emailID']}}</span><br>
+                <span class="fontprops"><b>Date of Birth : </b>{{ student_data['dob'] }}</span><br>
+                <span class="fontprops"><b>Phone No: </b>{{ student_data['phone'] }}</span>
+
+            </div>
+            <div class="col-md-6">
+                <span class="fontprops"><b>Enrollment No : </b>{{ student_data['ssid'] }}</span> <br>
+                <span class="fontprops"><b>Duration : </b>{{ student_data['sdate'] }} to {{ student_data['edate'] }}</span>
+                <br>
+            </div>
+
+        </div>
+          <hr>
+        <center>
+            <span class="fontprops">COURSE DETAILS</span><br><br>
+        </center>
+
+
+    </main>
+    <main class="container" role="main">
+        <div class="row">
+            <table class="table table-striped table-bordered table-hover">
+                <thead class="thead-dark">
+                <tr>
+                    <th scope="col">COURSE CODE</th>
+                    <th scope="col">COURSE NAME</th>
+                    <th scope="col">CREDITS</th>
+                    <th scope="col">TOTAL HOURS</th>
+                    <th scope="col">TAKEN IN SEM</th>
+                    <th scope="col">GRADE OBTAINED</th>
+
+                </tr>
+                </thead>
+                <tbody>
+                    {% for course in courses_data %}
+                        <tr>
+                            <td>
+                                {{ course['course_code'] }}
+                            </td>
+                             <td>
+                                {{ course['cname'] }}
+                            </td>
+                             <td>
+                                {{ course['credits'] }}
+                            </td>
+                            <td>
+                                {{ course['hrs'] }}
+                            </td>
+                            <td>
+                                {{ course['sem'] }}
+                            </td>
+                            <td>
+                                {{ course['grade'] }}
+                            </td>
+
+
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+        </div>
+         <div class="row">
+              <div class="col-md-6">
+                    <span class="fontprops"><b>Total Credits : </b>{{ totalcredits }}</span> <br>
+                  <span class="fontprops"><b>Credits Earned : </b>{{ creditsearned }}</span> <br>
+              </div>
+             <div class="col-md-6">
+                    <span class="fontprops"><b>CGPA: </b>{{ (creditsearned/totalcredits)*10 }}</span> <br>
+             </div>
+         </div>
+        <hr>
+        <br><br>
+         <div class="row">
+             <span class="fontprops"><b>For Credit Courses : </b></span> <br>
+             <br>
+               <table class="table table-striped table-bordered table-hover">
+                <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Academic Performance</th>
+                    <th scope="col">Grades</th>
+                    <th scope="col">Grade Points</th>
+                </tr>
+                </thead>
+                <tbody>
+                    {% for row in credittable.keys() %}
+                         <tr>
+                            <td>{{ credittable[row][0] }}</td>
+                            <td>{{ row }}</td>
+                            <td>{{ credittable[row][1] }}</td>
+
+                         </tr>
+                    {% endfor %}
+                </tbody>
+               </table>
+         </div>
+        <span class="fontprops"><b>Date : </b>{{ date }}</span> <br>
+    </main>
+</div>
+<br>
+<br>
+{% endblock content %}
